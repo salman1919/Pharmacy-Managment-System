@@ -1,0 +1,18 @@
+<div id="ReportList">
+
+    <div class="form-row" id="ReportListHeading">
+        <input class="col-md-3" type="text" value="Product ID" readonly>
+        <input class="col-md-3" type="text" value="Product Name" readonly>
+        <input class="col-md-3" type="text" value="Total Amount" readonly>
+        <input class="col-md-3" type="text" value="Total Quantity" readonly>
+    </div>
+
+    {% for data in List %}
+        <div class="form-row" id="ReportListRow">
+            <input class="col-md-3" type="text" value="{{ data.ProductId }}" readonly>
+            <input class="col-md-3" type="text" value="{{ data.ProductName }}" readonly>
+            <input class="col-md-3" type="text" value="{{ data.TotalAmount }}" readonly>
+            <input class="col-md-3" type="text" value="{{ data.TotalQuantity }}" readonly>
+        </div>
+    {% endfor %}
+</div>

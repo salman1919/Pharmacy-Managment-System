@@ -1,0 +1,28 @@
+<div id="BillInvDisplayDiv">
+
+    <div class="form-row" id="BillInvDisplayDivHeading">
+        <input class="col-md-3" type="text" value="Inventory ID" readonly>
+        <input class="col-md-3" type="text" value="Batch No" readonly>
+        <input class="col-md-3" type="text" value="Quantity" readonly>
+        <input class="col-md-3" type="text" value="Expiry Date" readonly>
+    </div>
+
+    {% for Inv in getInv %}
+        <form method="POST" class="BillInvDisplayDivForm" id="BillToCart-{{ Inv.InventoryId }}">
+            {% csrf_token %}
+            <div class="form-row" id="InvDetailForBill">
+                <input class="col-md-3" type="text" value="{{ Inv.InventoryId }}" readonly>
+                <input class="col-md-3" type="text" value="{{ Inv.BatchNo }}" readonly>
+                <input id="Quantity-{{ Inv.InventoryId }}" class="col-md-3" type="text" value="{{ Inv.Quantity }}" readonly>
+                <input class="col-md-3" type="text" value="{{ Inv.ExpiryDate }}" readonly>
+            </div>
+            <div class="form-row" id="InvDetailForBillAdd">
+                <input type="number" id="AddInvQuantityToBill-{{ Inv.InventoryId }}" class="form-control col-md-6" placeholder="Enter Quantity" required>
+                <input class="btn btn-primary col-md-4" id="InvAddToCart"
+                       onclick="AddInvToCart('{{ Inv.InventoryId }}')" value="Add To Cart" readonly>
+            </div>
+        </form>
+    {% endfor %}
+</div>
+
+

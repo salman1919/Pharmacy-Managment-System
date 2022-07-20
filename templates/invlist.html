@@ -1,0 +1,26 @@
+<div id="InvDisplayDiv">
+
+    <div class="form-row" id="InvDisplayDivHeading">
+        <input class="col-md-2" type="text" value="Inventory ID" readonly>
+        <input class="col-md-2" type="text" value="Batch No" readonly>
+        <input class="col-md-2" type="text" value="Quantity" readonly>
+        <input class="col-md-2" type="text" value="Expiry Date" readonly>
+    </div>
+
+    {% for Inv in getInv %}
+        <form method="POST" class="InvDisplayDivForm">
+            {% csrf_token %}
+            <div class="form-row" id="InvDetail">
+                <input class="col-md-2" type="text" value="{{ Inv.InventoryId }}" readonly>
+                <input class="col-md-2" type="text" value="{{ Inv.BatchNo }}" readonly>
+                <input class="col-md-2" type="text" value="{{ Inv.Quantity }}" readonly>
+                <input class="col-md-2" type="text" value="{{ Inv.ExpiryDate }}" readonly>
+                <button style="color: #d79b07" onclick="AddInvFormFill('{{ Inv.ProductId }}')"
+                        class="fa fa-edit col-md-1"></button>
+                <button style="color: #d20303" onclick="DeleteInventory('{{ Inv.InventoryId }}')"
+                        class="fa fa-trash col-md-1"></button>
+
+            </div>
+        </form>
+    {% endfor %}
+</div>

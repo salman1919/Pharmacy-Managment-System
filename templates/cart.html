@@ -1,0 +1,25 @@
+<!--suppress ALL -->
+<div id="CartList">
+    <div class="form-row" id="CartListHeading">
+        <input class="col-sm-3" value="Product Name">
+        <input class="col-sm-2" value="Quantity">
+        <input class="col-sm-2" value="Price">
+        <input class="col-sm-3" value="Expiry Date">
+    </div>
+    {% for prl in ProList %}
+        <div class="form-row" id="CartListRow">
+            <input class="col-sm-3" value="{{ prl.ProductName }}">
+            <input class="col-sm-2" value="{{ prl.Quantity }}">
+            <input class="col-sm-2" value="{{ prl.Price }}">
+            <input class="col-sm-3" value="{{ prl.ExpiryDate }}">
+            <form>
+                {% csrf_token %}
+
+                <button type="button" onclick="RemoveFromCart('{{ prl.BillId }}')" class="col-sm-2" style="border: 0px;background: transparent">
+                    <i class="fa fa-trash" style="font-size:24px;color: firebrick"></i>
+                </button>
+
+            </form>
+        </div>
+    {% endfor %}
+</div>

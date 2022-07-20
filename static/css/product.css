@@ -1,0 +1,174 @@
+/*----------Product Page-----------*/
+
+#ProductDiv {
+	height: calc(100vh - 85px);
+	background-image: url("../images/7.jpg");
+	background-position: center;
+	background-size: cover;
+	padding-top: 20px;
+}
+
+#ProInnerDiv {
+	background-color: rgba(57, 56, 56, 0.6);
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+
+}
+
+#productform input {
+	background-color: rgba(250, 247, 247, 0.6);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid cornflowerblue;
+}
+
+
+
+#subprobtn {
+	background-color: rgba(73, 241, 35, 0.5);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid white;
+	width: 100px;
+}
+
+#clrprobtn {
+	width: 100px;
+	background-color: rgb(45, 167, 224);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid white;
+}
+
+#productform #clrprobtn1 {
+	width: 100px;
+	background-color: rgb(45, 167, 224);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid white;
+}
+
+
+#upprobtn {
+	display: none;
+	width: 100px;
+	background-color: rgba(224, 215, 52, 0.6);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid white;
+}
+
+
+#productform label {
+	color: white;
+	font-weight: bold;
+}
+
+
+#AddProductBtn {
+	background-color: rgba(106, 243, 248, 0.4);
+	height: 40px;
+	font-weight: bold;
+	font-size: 18px;
+	color: white;
+	padding-top: 8px;
+	border-radius: 30px;
+
+}
+
+#AddProductBtn:hover {
+	border: 3px solid cornflowerblue;
+	padding-top: 5px;
+	background-color: rgba(140, 175, 243, 0.5);
+	border-radius: 15px;
+	cursor: pointer;
+
+}
+
+#UpdateProductBtn {
+	background-color: rgba(106, 243, 248, 0.4);
+	height: 40px;
+	font-weight: bold;
+	font-size: 18px;
+	color: white;
+	padding-top: 8px;
+	border-radius: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#UpdateProductBtn:hover {
+	border: 3px solid cornflowerblue;
+	padding-top: 5px;
+	background-color: rgba(140, 175, 243, 0.5);
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+#SearchProductByID {
+	background-color: rgba(250, 247, 247, 0.6);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid cornflowerblue;
+}
+#SearchProductByName {
+	background-color: rgba(250, 247, 247, 0.6);
+	border: none;
+	border-radius: 0px;
+	border-bottom: 3px solid cornflowerblue;
+}
+
+#UpdateProductDisplayDiv {
+	background-color: rgba(57, 79, 86, 0.4);
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 300px;
+	overflow-y: auto;
+	border-radius: 15px;
+}
+
+#UpdateProductDisplayDivHeading {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-left: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-bottom: 5px solid #0b86bd;
+}
+
+#UpdateProductDisplayDivHeading input{
+	background-color: transparent;
+	border: none;
+	color: #34aff1;
+	text-align: center;
+	font-weight: bold;
+ }
+
+#ProductListRow{
+	margin-top: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-left: 10px;
+	border-bottom: 1px solid #3bc5ec;
+}
+
+
+#ProductListRow input {
+	color: white;
+	border: none;
+	text-align: center;
+	background-color: transparent;
+}
+
+#ProductListRow button{
+	margin-left: 10px;
+	background: transparent;
+	border: none;
+}
+
+#InvDetail {
+	margin-top: 5px;
+	background-color: rgba(89, 92, 95, 0.5);
+	border-radius: 10px;
+}

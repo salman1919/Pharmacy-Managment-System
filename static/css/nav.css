@@ -1,0 +1,30 @@
+
+nav{
+    background-image: url("../images/4.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 85px;
+    display: block;
+}
+
+#accordion{
+
+    margin-top: 80px;
+}
+div ul li .btn{
+    width: 110px;
+    margin-right: 20px;
+
+    background-color: rgb(197, 209, 236);
+    border-bottom: 4px solid #0b86bd;
+    border-radius: 0px;
+
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+div ul li a:hover{
+    background-color: #3bc5ec;
+}

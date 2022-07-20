@@ -1,0 +1,38 @@
+<div id="BillProductDisplayDiv">
+
+    <div class="form-row" id="BillProductDisplayDivHeading">
+        <div class="col-md-9">
+            <div class="form-row">
+            <input class="col-md-3" type="text" value="Product ID" readonly>
+            <input class="col-md-3" type="text" value="Product Name" readonly>
+            <input class="col-md-3" type="text" value="Price" readonly>
+            <input class="col-md-3" type="text" value="Shelf No" readonly>
+        </div>
+        </div>
+    </div>
+
+    {% for data in getdata %}
+        <form method="POST" id="BillProductDisplayDivForm">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-9" id="pdetail">
+                    <div class="form-row">
+                    <input class="col-md-3" id="BillProductDisplayDivInput" type="text" value="{{ data.ProductId }}" readonly>
+                    <input class="col-md-3" id="BillProductDisplayDivInput" type="text" value="{{ data.ProductName }}" readonly>
+                    <input class="col-md-3" id="BillProductDisplayDivInput" type="text" value="{{ data.SalePerUnit }}" readonly>
+                    <input class="col-md-3" id="BillProductDisplayDivInput" type="text" value="{{ data.ShelfNo }}" readonly>
+                </div>
+                    </div>
+                <div class="col-md-3">
+                    <input id="BillBtn" value="Add" onclick="ChooseInvToCart('{{ data.ProductId }}')"
+                           class="btn btn-primary" readonly/>
+                </div>
+                <div id="InventoryForBillDiv-{{ data.ProductId }}">
+
+                </div>
+            </div>
+        </form>
+    {% endfor %}
+</div>
+
+

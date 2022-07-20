@@ -1,0 +1,162 @@
+/*----------Product Page-----------*/
+
+#mainpanel {
+	padding: 10px;
+
+}
+#MainUpper{
+
+}
+
+#searchpanelforbill {
+	border: 2px solid #0b86bd;
+	padding: 10px;
+	border-radius: 10px;
+	height: 520px;
+	background-color: rgba(208, 229, 229, 0.6);
+}
+
+#SearchProductByIdForBill:hover {
+	background-color: lightblue;
+}
+
+#SearchProductByNameForBill:hover {
+	background-color: lightblue;
+}
+
+
+
+
+
+#BillProductDisplayDivHeading {
+	background-color: #0b86bd;
+	padding: 5px;
+}
+
+#BillProductDisplayDivHeading input {
+	border: 0px;
+	background-color: transparent;
+	text-align: center;
+}
+
+#BillProductDisplayDiv {
+	padding-top: 10px;
+	height: 450px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-radius: 15px;
+}
+
+#BillProductDisplayDivInput {
+	background-color: rgba(218, 234, 234, 0);
+	border: none;
+	text-align: center;
+	font-size: 15px;
+	color: white;
+}
+
+#BillProductDisplayDivForm {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #0b86bd;
+}
+
+#pdetail {
+	background-color: rgba(74, 158, 191, 0.6);
+	padding-top: 5px;
+	border-radius: 10px;
+	color: honeydew;
+
+}
+
+#BillBtn {
+	border: 1px solid #0b86bd;
+	margin-left: 10px;
+	width: 130px;
+	background-color: rgba(255, 253, 253, 0.3);
+	color: rgb(50, 45, 45);
+	border-radius: 10px;
+}
+
+#BillBtn:hover {
+	background-color: rgba(58, 144, 238, 0.5);
+}
+
+
+#BillInvDisplayDiv {
+	margin: 5px;
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px solid #0b86bd;
+}
+
+#BillInvDisplayDivHeading {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: rgba(60, 193, 215, 0.5);
+}
+
+#BillInvDisplayDivHeading input {
+	background-color: transparent;
+	text-align: center;
+	border: none;
+}
+
+
+#InvDetailForBill {
+	margin-top: 5px;
+	background-color: rgba(89, 92, 95, 0.5);
+	border-radius: 10px;
+}
+
+#InvDetailForBill .col-md-3 {
+	background-color: transparent;
+	border: none;
+	padding: 5px;
+	text-align: center;
+	color: honeydew;
+}
+
+#InvDetailForBillAdd {
+	margin-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #0b86bd;
+
+}
+
+#InvDetailForBillAdd input {
+	border: none;
+	border-bottom: 2px solid #3bc5ec;
+	background-color: rgba(133, 161, 190, 0.5);
+	border-radius: 0px;
+	margin-left: 10px;
+}
+
+#InvDetailForBillAdd #InvAddToCart {
+	background-color: rgba(52, 193, 42, 0.6);
+	margin-left: 15px;
+}
+
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #737070;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #34aff1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #079196;
+}
+

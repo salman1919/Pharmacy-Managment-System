@@ -1,0 +1,19 @@
+@media only screen and (max-width: 600px) {
+
+    nav{
+        height: auto;
+    }
+
+    #navbarSupportedContent{
+        width: 100vw;
+        background-color: antiquewhite;
+    }
+
+    #navbarSupportedContent ul li a{
+        width: 100%;
+    }
+
+  #productdiv{
+      height: fit-content;
+  }
+}

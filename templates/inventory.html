@@ -1,0 +1,37 @@
+<div id="InventoryProductDisplayDiv">
+
+    <div class="form-row" id="InventoryProductDisplayDivHeading">
+        <input class="col-md-2" type="text" value="Product ID" readonly>
+        <input class="col-md-2" type="text" value="Product Name" readonly>
+        <input class="col-md-2" type="text" value="Company" readonly>
+        <input class="col-md-1" type="text" value="Min Stock" readonly>
+        <input class="col-md-1" type="text" value="Cost/Unit" readonly>
+        <input class="col-md-1" type="text" value="Sale/Unit" readonly>
+    </div>
+
+    {% for data in getdata %}
+        <div class="form-row" id="InvProductListRow">
+            <input class="col-md-2" type="text" value="{{ data.ProductId }}" readonly>
+            <input class="col-md-2" type="text" value="{{ data.ProductName }}" readonly>
+            <input class="col-md-2" type="text" value="{{ data.CompanyName }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.MinStockLimit }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.CostPerUnit }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.SalePerUnit }}" readonly>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button onclick="DiplayInv('{{ data.ProductId }}')" id="InventoryOption"
+                        class="fa fa-arrow-down col-md-1" style="font-size:22px; color: rgb(16,196,189)">
+                </button>
+                <button style="color: #2af333" onclick="AddInvFormFill('{{ data.ProductId }}')"
+                        class="fa fa-plus-circle col-md-1">
+                </button>
+            </form>
+        </div>
+        <div class="form-row" id="ProductInventory-{{ data.ProductId }}">
+        </div>
+
+    {% endfor %}
+</div>
+
+

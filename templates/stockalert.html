@@ -1,0 +1,10 @@
+<div>
+    {% for data in StockAlert %}
+        <div class="form-row" id="CartListRow">
+            <input class="col-sm-3" value="{{ data.ProductId }}">
+            <input class="col-sm-3" value="{{ data.ProductName }}">
+            <input class="col-sm-3" value="{{ data.MinStockLimit }}">
+            <input class="col-sm-3" value="{{ data.Total }}">
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,35 @@
+<div id="UpdateProductDisplayDiv">
+
+    <div class="form-row" id="UpdateProductDisplayDivHeading">
+        <input class="col-md-2" type="text" value="Product ID" readonly>
+        <input class="col-md-2" type="text" value="Product Name" readonly>
+        <input class="col-md-2" type="text" value="Company" readonly>
+        <input class="col-md-1" type="text" value="Min Stock" readonly>
+        <input class="col-md-1" type="text" value="Cost/Unit" readonly>
+        <input class="col-md-1" type="text" value="Sale/Unit" readonly>
+    </div>
+
+    {% for data in getdata %}
+        <div class="form-row" id="ProductListRow">
+            <input class="col-md-2" type="text" value="{{ data.ProductId }}" readonly>
+            <input class="col-md-2" type="text" value="{{ data.ProductName }}" readonly>
+            <input class="col-md-2" type="text" value="{{ data.CompanyName }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.MinStockLimit }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.CostPerUnit }}" readonly>
+            <input class="col-md-1" type="text" value="{{ data.SalePerUnit }}" readonly>
+            <button name="updateproduct-{{ data.ProductId }}"
+                    onclick="UpdateProductFormFill('{{ data.ProductId }}','{{ data.ProductName }}','{{ data.CompanyName }}','{{ data.CostPerUnit }}','{{ data.SalePerUnit }}','{{ data.MinStockLimit }}','{{ data.ShelfNo }}')"
+                    id="updateprobtn" class="fa fa-edit col-md-1" style="font-size:24px; color: rgb(195,173,29)">
+            </button>
+            <form method="post" >
+                {% csrf_token %}
+                <button onclick="DeleteProduct('{{ data.ProductId }}')" name="deleteproduct-{{ data.ProductName }}"
+                        id="updateprobtn" class="fa fa-trash col-md-1"
+                        style="font-size:24px; color: rgb(195,23,23)">
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+

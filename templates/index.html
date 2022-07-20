@@ -1,0 +1,880 @@
+<!doctype html>
+{% load static %}
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="{% static "css/nav.css" %}" rel="stylesheet">
+    <link href="{% static "css/product.css" %}" rel="stylesheet">
+    <link href="{% static "css/inventory.css" %}" rel="stylesheet">
+    <link href="{% static "css/bill.css" %}" rel="stylesheet">
+    <link href="{% static "css/cart.css" %}" rel="stylesheet">
+    <link href="{% static "css/alert.css" %}" rel="stylesheet">
+    <link href="{% static "css/report.css" %}" rel="stylesheet">
+
+
+    <title>Ascenders</title>
+</head>
+<body onload="LoadAlertFunc()" style="font-family: Ubuntu;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'images/logo.png' %}" width="80" height="80" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a id="home" class="btn" data-toggle="collapse" data-target="#mainpanel" aria-expanded="true"
+                   aria-controls="#mainpanel">Home</a>
+            </li>
+            <li class="nav-item">
+                <a id="ProductNav" class="btn" data-toggle="collapse" data-target="#ProductDiv"
+                   aria-expanded="false"
+                   aria-controls="ProductDiv">Product</a>
+            </li>
+            <li class="nav-item">
+                <a id="InventoryNav" class="btn" data-toggle="collapse" data-target="#InventoryDiv"
+                   aria-expanded="false"
+                   aria-controls="InventoryDiv">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a id="ReportNav" class="btn" data-toggle="collapse" data-target="#ReportDiv"
+                   aria-expanded="false" onclick="DisplayReport()"
+                   aria-controls="ReportDiv">Report</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<div id="accordion">
+    <div class="collapse show" id="mainpanel" aria-labelledby="home" data-parent="#accordion">
+        <div class="form-row" id="MainUpper">
+            <div id="searchpanelforbill" class="col-md-7">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-row" style="border-bottom: 2px solid black; padding-bottom: 5px">
+                        <div class="col-md-6">
+                            <input id="SearchProductByIdForBill" oninput="SearchProductForBillByID()"
+                                   class="form-control mr-sm-2" placeholder="Search By Id">
+                        </div>
+                        <div class="col-md-6">
+                            <input id="SearchProductByNameForBill" oninput="SearchProductForBillByName()"
+                                   class="form-control mr-sm-2" placeholder="Search By Name">
+                        </div>
+                    </div>
+                </form>
+                <div id="BillSearchDisplayDiv">
+
+                </div>
+            </div>
+
+
+            <div class="col-md-5">
+                <div id="cartpanel">
+
+                </div>
+                <div id="GTotalDiv">
+                    <form method="post" id="generatebill">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-7">
+                                <input id="CustomerId" type="text" class="form-control" placeholder="Customer Name/ID">
+
+                                <button type="button" onclick="SaveBill()" id="TotalGenerate">
+                                    Save / Clear
+                                </button>
+                                <button id="PrintBill">
+                                    Print Bill <i class="fa fa-print" style="font-size:24px"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <label style="font-size: 18px; font-weight: bold">Grand Total</label>
+                                <input type="number" class="form-control" id="TotalDisplay" value='0' readonly>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-row" id="AlertMainDiv">
+            <div id="StockAlertDiv">
+                <div class="form-row" style="font-size: 20px; font-weight: bold">
+                    Minimum Stock Alert
+                </div>
+                <div class="form-row" id="AlertListHeading">
+                    <input class="col-sm-3" value="Product ID">
+                    <input class="col-sm-3" value="Product Name">
+                    <input class="col-sm-3" value="Minimum Limit">
+                    <input class="col-sm-3" value="Remaining Stock">
+                </div>
+
+                <div id="StockAlertList" class="form-row">
+
+                </div>
+            </div>
+
+            <div id="ExpAlertDiv">
+                <div class="form-row" style="font-size: 20px; font-weight: bold">
+                    Expiry Stock Alert
+                </div>
+                <div class="form-row" id="AlertListHeading">
+                    <input class="col-sm-3" value="Product Name">
+                    <input class="col-sm-3" value="Invenotry ID">
+                    <input class="col-sm-3" value="Batch No">
+                    <input class="col-sm-3" value="Expiry Date">
+                </div>
+
+                <div id="ExpAlertList" class="form-row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--  Product  -->
+
+
+    <div class="collapse" id="ProductDiv" aria-labelledby="#ProductNav" data-parent="#accordion">
+
+        <div id="productaccordion">
+            <div class="container" id="ProInnerDiv">
+
+                <div id="AddProductBtn" class="ProductBtn" data-toggle="collapse" data-target="#ProductAddDiv"
+                     aria-expanded="true"
+                     aria-controls="#ProductAddDiv">Add Product
+                </div>
+
+
+                <div class="collapse show" id="ProductAddDiv" aria-labelledby="AddProductBtn"
+                     data-parent="#productaccordion">
+                    <form method="POST" id="productform">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="ProId">Product ID</label>
+                                <input type="text" class="form-control" id="ProId" placeholder="Product ID" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="ProName">Product Name</label>
+                                <input type="text" class="form-control" id="ProName" placeholder="Product Name"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="ComName">Company Name</label>
+                                <input type="text" class="form-control" id="ComName" placeholder="Company Name"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="UCost">Unit Price</label>
+                                <input type="number" class="form-control" id="UCost" placeholder="Unit Price" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="RCost">Retail Price</label>
+                                <input type="number" class="form-control" id="RCost" placeholder="Retail Price"
+                                       required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="MinLimit">Minimum Stock Limit</label>
+                                <input type="number" class="form-control" id="MinLimit"
+                                       placeholder="Mininum Stock Limit" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="ShelfNo">Shelf No</label>
+                                <input type="number" class="form-control" id="ShelfNo" placeholder="Shelf No" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="subprobtn" onclick="AddProduct()" class="btn btn-primary"
+                                name="productsubmit">Submit
+                        </button>
+                        <button type="submit" id="upprobtn" onclick="UpadteProduct()" class="btn btn-primary">Update
+                        </button>
+                        <button id="clrprobtn" type="reset" class="btn btn-primary">Clear</button>
+                    </form>
+                </div>
+
+
+                <div id="UpdateProductBtn" class="ProductBtn" data-toggle="collapse" data-target="#ProductUpdateDiv"
+                     aria-expanded="false"
+                     aria-controls="ProductUpdateDiv">Update / Delete Product
+                </div>
+                <div class="collapse" id="ProductUpdateDiv" aria-labelledby="UpdateProductBtn"
+                     data-parent="#productaccordion">
+                    <div>
+                        <form method="post" id="SearchForUpdate">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" oninput="SearchProductForUpdateByID()" class="form-control"
+                                           id="SearchProductByID" placeholder="Search By ID">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" oninput="SearchProductForUpdateByName()" class="form-control"
+                                           id="SearchProductByName" placeholder="Search By Name">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="ptext">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="collapse" id="InventoryDiv" aria-labelledby="#InventoryNav" data-parent="#accordion">
+        <div id="inventoryaccordion">
+            <div class="container" id="InvInnerDiv">
+
+                <form method="post" id="SearchForInv">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" oninput="SearchProductForInvByID()" class="form-control"
+                                   id="SearchProductByIDForInv" placeholder="Search By ID">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" oninput="SearchProductForInvByName()" class="form-control"
+                                   id="SearchProductByNameForInv" placeholder="Search By Name">
+                        </div>
+                    </div>
+                </form>
+                <div id="InvSearchDisplay">
+
+                </div>
+                <div id="AddInventoryDiv">
+                    <form method="POST" id="AddInventoryForm">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="ProIdInv">Product Id</label>
+                                <input type="text" class="form-control" id="ProIdInv" readonly>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="InvId">Inventory Id</label>
+                                <input type="text" class="form-control" id="InvId" placeholder="Inventory Id"
+                                       required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="BatchNo">Batch No</label>
+                                <input type="text" class="form-control" id="BatchNo"
+                                       placeholder="Batch No" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="InvQuantity">Product Quantity</label>
+                                <input type="number" class="form-control" id="InvQuantity"
+                                       placeholder="Product Quantity" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="InvExp">Expiry Date</label>
+                                <input type="date" class="form-control" id="InvExp" placeholder="Expiry Date" required>
+                            </div>
+                        </div>
+
+                        <input id="subinvbtn" value="Submit" class="btn btn-primary"/>
+                        <input id="upinvbtn" value="Update" class="btn btn-primary">
+                        <input id="clrinvbtn" type="reset" value="Clear" class="btn btn-primary"/>
+                        <input id="backinvbtn" type="reset" value="Back" class="btn btn-primary"/>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="ReportDiv" aria-labelledby="#ReportNav" data-parent="#accordion">
+        <center>
+            <div class="col-md-7" id="ReportInnerDiv">
+                <form method="post" id="ReportForm">
+                    <div class="form-row" id="DateSelectionDiv">
+                        <label class="col-md-2" for="FromDate">From</label>
+                        <input oninput="DisplayReport()" class="form-control col-md-3" id="FromDate" type="date">
+
+                        <label class="col-md-2" for="ToDate">To</label>
+                        <input oninput="DisplayReport()" class="form-control col-md-3" id="ToDate" type="date">
+                    </div>
+                    <div class="form-row" id="DisplayReportDiv">
+
+                    </div>
+                </form>
+            </div>
+        </center>
+    </div>
+
+
+</div>
+
+</body>
+
+{% block javascript %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+    <script>
+        function LoadAlertFunc() {
+            $.ajax({
+                type: 'POST',
+                url: 'loadstockalert/',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById("StockAlertList").innerHTML = response;
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'loadexpalert/',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById("ExpAlertList").innerHTML = response;
+                }
+            });
+            n = new Date();
+            y = n.getFullYear();
+            m = n.getMonth() + 1;
+            d = n.getDate();
+            var currentdate = y + "-";
+            if (m < '10') {
+                currentdate = currentdate + "0" + m;
+            } else {
+                currentdate = currentdate + "" + m;
+            }
+            if (d < '10') {
+                currentdate = currentdate + "-0" + d;
+            } else {
+                currentdate = currentdate + "-" + d;
+            }
+            document.getElementById("FromDate").value = "2020-01-01";
+            document.getElementById("ToDate").value = currentdate;
+            SearchProductForBillByName();
+            SearchProductForUpdateByName();
+            SearchProductForInvByName();
+        }
+    </script>
+
+
+    <!-- Bill Section -->
+
+    <!-- Search For Bill -->
+
+    <!-- Search For Bill By ID -->
+
+    <script type="text/javascript">
+        function SearchProductForBillByID() {
+            var SearchID = document.getElementById("SearchProductByIdForBill").value;
+            $.ajax({
+                type: 'POST',
+                url: 'idsearchproductbill/',
+                data: {
+                    SearchID: SearchID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById('BillSearchDisplayDiv').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+    <!-- Search For Bill By Name -->
+
+    <script type="text/javascript">
+        function SearchProductForBillByName() {
+            var SearchName = document.getElementById("SearchProductByNameForBill").value;
+            $.ajax({
+                type: 'POST',
+                url: 'namesearchproductbill/',
+                data: {
+                    SearchName: SearchName,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById('BillSearchDisplayDiv').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+    <!-- Bill Section - Choose Product -->
+
+    <script type="text/javascript">
+        function ChooseInvToCart(ProIdInvDis) {
+            $.ajax({
+                type: 'POST',
+                url: 'displayinventoryforbill/',
+                data: {
+                    SearchId: ProIdInvDis,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById("InventoryForBillDiv-" + ProIdInvDis).innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+    <!-- Bill Section - Add Inventory To Cart -->
+
+    <script type="text/javascript">
+        function AddInvToCart(InvId) {
+            if ($("#AddInvQuantityToBill-" + InvId).val() == "") {
+                alert("Enter Quantity");
+            } else if (parseInt($("#AddInvQuantityToBill-" + InvId).val()) > parseInt($("#Quantity-" + InvId).val())) {
+                alert("No Enough Stock");
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'addtocart/',
+                    data: {
+                        InvId: InvId,
+                        InvQuan: $("#AddInvQuantityToBill-" + InvId).val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+
+                    success: function (response) {
+                        document.getElementById("cartpanel").innerHTML = response;
+                        SearchProductForBillByName();
+                        GrandTotalBill();
+                    }
+                });
+            }
+        }
+    </script>
+
+    <!-- Bill Section - Delete Inventory From Cart-->
+
+    <script type="text/javascript">
+        function RemoveFromCart(bill_id) {
+            $.ajax({
+                type: 'POST',
+                url: 'removefromcart/',
+                data: {
+                    BillId: bill_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById("cartpanel").innerHTML = response;
+                    SearchProductForBillByName();
+                    GrandTotalBill();
+                }
+            });
+        }
+    </script>
+
+    <!-- Bill Section - Generate Bill -->
+
+    <script type="text/javascript">
+        function GrandTotalBill() {
+            $.ajax({
+                url: 'totalbill/',
+                success: function (response) {
+                    $("#TotalDisplay").val(response);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function SaveBill() {
+            $.ajax({
+                type: 'POST',
+                url: 'savebill/',
+                data: {
+                    CustId: $("#CustomerId").val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById("cartpanel").innerHTML = response;
+                    $("#TotalDisplay").val("");
+                }
+            });
+        }
+    </script>
+
+
+
+    <!-- Product Section -->
+    <!-- Product Section - Add Product -->
+
+    <script type="text/javascript">
+        function AddProduct() {
+            $("#productform").submit(function (e) {
+                e.preventDefault()
+            });
+            if ($("#ProId").val() == "" || $("#ProName").val() == "" || $("#ComName").val() == "" || $("#MinLimit").val() == "" || $("#UCost").val() == "" || $("#RCost").val() == "" || $("#ShelfNo").val() == "") {
+                alert("Fill Every Required Feild");
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'addproduct/',
+                    data: {
+                        ProId: $('#ProId').val(),
+                        ProName: $('#ProName').val(),
+                        MinLimit: $('#MinLimit').val(),
+                        ComName: $('#ComName').val(),
+                        UCost: $('#UCost').val(),
+                        RCost: $('#RCost').val(),
+                        ShelfNo: $('#ShelfNo').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function () {
+                        alert("New Product Added Successfully")
+                    }
+                });
+
+            }
+        }
+    </script>
+
+    <!-- Product Section - Update Product -->
+
+    <script type="text/javascript">
+        function UpadteProduct() {
+            $("#productform").submit(function (e) {
+                e.preventDefault()
+            });
+            if ($("#ProId").val() == "" || $("#ProName").val() == "" || $("#ComName").val() == "" || $("#MinLimit").val() == "" || $("#UCost").val() == "" || $("#RCost").val() == "" || $("#ShelfNo").val() == "") {
+                alert("Fill Every Required Feild");
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'updateproduct/',
+                    data: {
+                        ProId: $('#ProId').val(),
+                        ProName: $('#ProName').val(),
+                        MinLimit: $('#MinLimit').val(),
+                        ComName: $('#ComName').val(),
+                        UCost: $('#UCost').val(),
+                        RCost: $('#RCost').val(),
+                        ShelfNo: $('#ShelfNo').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function () {
+                        alert("Product Updated Successfully")
+                    }
+                });
+            }
+        }
+    </script>
+
+    <!-- Product Section - Delete Product -->
+
+    <script type="text/javascript">
+        function DeleteProduct(pro_id) {
+            $(this).submit(function (e) {
+                e.preventDefault()
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'deleteproduct/',
+                data: {
+                    ProId: pro_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function () {
+                    alert("Product Deleted Along With Its References");
+                }
+            });
+        }
+    </script>
+
+    <!-- Product Section - Fill Form For Update Product -->
+
+    <script type="text/javascript">
+        function UpdateProductFormFill(pid, pname, pcomp, punit, psale, pstock, pshelf) {
+            $("#upprobtn").show();
+            $("#subprobtn").hide();
+            $("#clrprobtn").val("Back");
+            $("#clrprobtn").attr("id", "clrprobtn1");
+            $("#AddProductBtn").click();
+            $("#ProId").val(pid);
+            $("#ProName").val(pname);
+            $("#ComName").val(pcomp);
+            $("#UCost").val(punit);
+            $("#RCost").val(psale);
+            $("#MinLimit").val(pstock);
+            $("#ShelfNo").val(pshelf);
+            $("#ProId").prop("disabled", true);
+        }
+    </script>
+
+    <!-- Product Section - To set Back From Update Product -->
+
+    <script type="text/javascript">
+        $(function () {
+            $("#clrprobtn").on('click', function () {
+                $("#upprobtn").hide();
+                $("#subprobtn").show();
+                $("#clrprobtn1").val("Clear");
+                $("#ProId").prop("disabled", false);
+            });
+        });
+    </script>
+
+
+    <!-- Product Section - Search By Id -->
+
+    <script type="text/javascript">
+        function SearchProductForUpdateByID() {
+            var SearchID = document.getElementById("SearchProductByID").value;
+            $.ajax({
+                type: 'POST',
+                url: 'idsearchproductupdate/',
+                data: {
+                    SearchID: SearchID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById('ptext').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+    <!-- Product Section - Search By Name -->
+
+    <script type="text/javascript">
+        function SearchProductForUpdateByName() {
+            var SearchName = document.getElementById("SearchProductByName").value;
+            $.ajax({
+                type: 'POST',
+                url: 'namesearchproductupdate/',
+                data: {
+                    SearchName: SearchName,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById('ptext').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+
+
+    <script type="text/javascript">
+        function SearchProductForInvByID() {
+            var SearchID = document.getElementById("SearchProductByIDForInv").value;
+            $.ajax({
+                type: 'POST',
+                url: 'idsearchproductinventory/',
+                data: {
+                    SearchID: SearchID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById('InvSearchDisplay').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function SearchProductForInvByName() {
+            var SearchName = document.getElementById("SearchProductByNameForInv").value;
+            $.ajax({
+                type: 'POST',
+                url: 'namesearchproductinventory/',
+                data: {
+                    SearchName: SearchName,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById('InvSearchDisplay').innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+
+
+    <script type="text/javascript">
+        function AddInvFormFill(pidinv) {
+            $("#AddInventoryDiv").show();
+            $("#InvSearchDisplay").hide();
+            $("#upinvbtn").hide();
+            $("#ProIdInv").val(pidinv);
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#backinvbtn").on('click', function () {
+                $("#AddInventoryDiv").hide();
+                $("#InvSearchDisplay").show();
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#AddInventoryForm input").click(function (ev) {
+                if ($(this).attr("value") == "Submit") {
+                    $("#AddInventoryForm").submit(function (e) {
+                        e.preventDefault()
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: 'addinventory/',
+                        data: {
+                            ProIdInv: $('#ProIdInv').val(),
+                            InvId: $('#InvId').val(),
+                            BatchNo: $('#BatchNo').val(),
+                            InvExp: $('#InvExp').val(),
+                            InvQuantity: $('#InvQuantity').val(),
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        success: function () {
+                            alert("New Inventory Added Successfully")
+                        }
+                    });
+                }
+
+                if ($(this).attr("value") == "Update") {
+                    $("#productform").submit(function (e) {
+                        e.preventDefault()
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'updateproduct/',
+                        data: {
+                            ProId: $('#ProId').val(),
+                            ProName: $('#ProName').val(),
+                            MinLimit: $('#MinLimit').val(),
+                            ComName: $('#ComName').val(),
+                            UCost: $('#UCost').val(),
+                            RCost: $('#RCost').val(),
+                            ShelfNo: $('#ShelfNo').val(),
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        success: function () {
+                            alert("Product Updated Successfully")
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function DiplayInv(ProIdInvDis) {
+            $(this).submit(function (e) {
+                e.preventDefault()
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'displayinventory/',
+                data: {
+                    SearchId: ProIdInvDis,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+
+                success: function (response) {
+                    document.getElementById("ProductInventory-" + ProIdInvDis).innerHTML = response;
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function DeleteInventory(inv_id) {
+            $(this).submit(function (e) {
+                e.preventDefault()
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'deleteinventory/',
+                data: {
+                    InvId: inv_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function () {
+                    alert("Inventory Deleted Along With Its References");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function DisplayReport() {
+            $("#ReportForm").submit(function (e) {
+                e.preventDefault()
+            });
+            var fromdate = document.getElementById("FromDate").value;
+            var todate = document.getElementById("ToDate").value;
+            $.ajax({
+                type: 'POST',
+                url: 'displayreport/',
+                data: {
+                    FromDate: fromdate,
+                    ToDate: todate,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    document.getElementById("DisplayReportDiv").innerHTML = response;
+                }
+            });
+        }
+    </script>
+
+
+
+{% endblock %}
+</html>

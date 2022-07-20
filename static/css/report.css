@@ -1,0 +1,57 @@
+#ReportDiv{
+	background-image: url("../images/21.jpg");
+	height: calc(100vh - 85px);
+	background-size: cover;
+	background-position: center;
+	padding-top: 20px;
+}
+
+#ReportInnerDiv{
+	background-color: rgba(127, 136, 128, 0.7);
+	height: 500px;
+	padding: 10px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#DateSelectionDiv{
+	padding-bottom: 10px;
+	border-bottom: 3px #d79b07 solid;
+}
+#DateSelectionDiv label{
+	text-align: right;
+	color: #d79b07;
+	font-weight: bold;
+	font-family: Ubuntu;
+	padding-top: 5px;
+	margin-right: 5px;
+}
+
+
+#ReportListHeading{
+	margin: 10px;
+	background-color: rgba(171, 136, 49,0.7);
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#ReportListHeading input{
+	background: transparent;
+	border: none;
+	color: white;
+	font-family: Ubuntu;
+	font-weight: bold;
+	text-align: center;
+}
+
+#ReportListRow{
+	margin: 10px;
+	border-bottom: 1px solid #d79b07;
+}
+#ReportListRow input{
+	background: transparent;
+	border: none;
+	color: white;
+	font-family: Ubuntu;
+	font-weight: bold;
+	text-align: center;
+}

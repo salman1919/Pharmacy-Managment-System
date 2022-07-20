@@ -1,0 +1,11 @@
+<!--suppress ALL -->
+<div>
+    {% for data in ExpAlert %}
+        <div class="form-row" id="CartListRow">
+            <input class="col-sm-3" value="{{ data.ProductName }}">
+            <input class="col-sm-3" value="{{ data.InventoryId }}">
+            <input class="col-sm-3" value="{{ data.BatchNo }}">
+            <input class="col-sm-3" value="{{ data.ExpiryDate }}">
+        </div>
+    {% endfor %}
+</div>
